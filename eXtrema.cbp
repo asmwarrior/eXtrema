@@ -27,7 +27,6 @@
 					<Add directory="src/wxForms" />
 					<Add directory="src/Graphics" />
 					<Add directory="src" />
-					<Add directory="$(TARGET_COMPILER_DIR)include/plplot/" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add option="`$(#WX_CONFIG) --rcflags`" />
