@@ -98,18 +98,18 @@ AnalysisWindow::AnalysisWindow( extrema *extrema )
   writeDataMenu->Append( ID_writeMatrix, wxT("Matrices"), wxT("write matrix data to a file") );
   writeDataMenu->Append( ID_writeText, wxT("Text variables"), wxT("write string data to a file") );
   fileMenu->Append( wxID_ANY, wxT("Write data"), writeDataMenu, wxT("write data to a file") );
-  
+
   fileMenu->AppendSeparator();
   fileMenu->Append( wxID_EXIT, wxT("E&xit"), wxT("Quit this program") );
-  
+
   wxMenu *helpMenu = new wxMenu();
   helpMenu->Append( wxID_HELP, wxT("&Help contents"), wxT("Open the help facility") );
   helpMenu->Append( wxID_ABOUT, wxT("&About"), wxT("Show the about dialog") );
-  
+
   wxMenuBar *menuBar = new wxMenuBar();
   menuBar->Append( fileMenu, wxT("&File") );
   menuBar->Append( helpMenu, wxT("&Help") );
-  
+
   SetMenuBar( menuBar );
   //
   // for a vertical sizer:
@@ -207,7 +207,7 @@ void AnalysisWindow::OnAbout( wxCommandEvent &WXUNUSED(event) )
   textCtrl->AppendText( wxT("GNU General Public License, version 2 or greater,\n") );
   textCtrl->AppendText( wxT("as published by the FSF.\n") );
   sizer->Add( textCtrl, wxSizerFlags(1).Align(0).Expand().Border(wxALL,1) );
-  
+
   wxButton *ok = new wxButton( &dg, wxID_OK, wxT("OK") );
   sizer->Add( ok, wxSizerFlags(0).Centre().Border(wxALL,2) );
 
