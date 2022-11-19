@@ -21,12 +21,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "wx/wx.h"
 
 class GRA_color;
+class ChooseFilePanel;
 
 class ColorSelector : public wxFrame
 {
 public:
   ColorSelector( wxWindow * );
-  
+
   void SetColor( GRA_color * );
 
 private:
@@ -38,17 +39,18 @@ private:
   void OnSelectCell( wxGridEvent & );
   void OnRadio( wxCommandEvent & );
   void CloseEventHandler( wxCloseEvent & );
-  
+
   wxGrid *colorMapGrid_;
   wxRadioBox *namedColorsRB_;
   bool gridClick_, namedColorClick_;
+  ChooseFilePanel *chooseFilePanel_;
 
   enum {
       ID_grid,
       ID_radio
-  }
-  
-  
+  };
+
+
   // any class wishing to process wxWidgets events must use this macro
   DECLARE_EVENT_TABLE()
 };

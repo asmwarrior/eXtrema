@@ -17,11 +17,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 #include <iostream>
 #include <fstream>
-
+#include <wx/grid.h>
 #include <wx/persist/toplevel.h>
 
 #include "ColorSelector.h"
 #include "GRA_color.h"
+#include "GRA_colorControl.h"
+#include "GRA_colorMap.h"
 
 #include "ParseLine.h"
 #include "ESyntaxError.h"
@@ -45,13 +47,13 @@ ColorSelector::ColorSelector( wxWindow *parent )
 {
   wxPanel* const mainPanel = new wxPanel(this);
   wxBoxSizer *mainSizer = new wxBoxSizer( wxVERTICAL );
-  
+
   wxPanel *topPanel = new wxPanel( mainPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
   wxBoxSizer *topSizer = new wxBoxSizer( wxHORIZONTAL );
 
   colorMapGrid_ = new wxGrid( topPanel, ID_grid, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER );
   colorMapGrid_->CreateGrid( 1, 1, wxGrid::wxGridSelectCells );
-  topSizer->Add( colorMapGrid, wxSizerFlags(0).Left().Border(wxALL,5) );
+  topSizer->Add( colorMapGrid_, wxSizerFlags(0).Left().Border(wxALL,5) );
 
   int ncolors = GRA_colorControl::GetNumberOfNamedColors();
   wxString *choices = new wxString[ncolors];
@@ -63,7 +65,7 @@ ColorSelector::ColorSelector( wxWindow *parent )
 
   topPanel->SetSizer( topSizer );
   mainSizer->Add( topPanel, wxSizerFlags(1).Expand().Border(wxALL,1) );
-  
+
   wxPanel *bottomPanel = new wxPanel( mainPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
   wxBoxSizer *bottomSizer = new wxBoxSizer( wxHORIZONTAL );
   wxButton *okButton = new wxButton( bottomPanel, wxID_OK, wxT("OK") );
@@ -76,11 +78,11 @@ ColorSelector::ColorSelector( wxWindow *parent )
   mainSizer->Add( bottomPanel, wxSizerFlags(1).Expand().Centre().Border(wxALL,1) );
 
   mainPanel->SetSizer( mainSizer );
-  
+
   wxPersistentRegisterAndRestore(this, "ColorSelector");
 
   Show( true );
-  
+
   gridClick_ = false;
   namedColorClick_ = false;
 }
@@ -105,15 +107,15 @@ void ColorSelector::CloseEventHandler( wxCloseEvent &WXUNUSED(event) )
 void ColorSelector::SetColor( GRA_color *color )
 {
   namedColorsRB_->SetSelection( 0 );
-  
+
   int ncolors = GRA_colorControl::GetColorMap()->GetSize();
   int ncols = static_cast<int>( sqrt(static_cast<double>(ncolors))+0.5 );
   int nrows = ncolors/ncols;
   while (ncols*nrows < ncolors) ++nrows;
-  
+
   colorMapGrid_->AppendRows( nrows-1 );
   colorMapGrid_->AppendCols( ncols-1 );
-  
+
   if( color )
   {
     int colorCode = GRA_colorControl::GetColorCode(color);
@@ -132,13 +134,14 @@ void ColorSelector::SetColor( GRA_color *color )
       int row = (colorCode-col)/ncols;
       colorMapGrid_->SetGridCursor( row, col );
     }
+  }
 }
 
 void ColorSelector::OnSelectCell( wxGridEvent &WXUNUSED(event) )
 {
   gridClick_ = true;
   namedColorClick_ = false;
-} 
+}
 
 void ColorSelector::OnRadio( wxCommandEvent &WXUNUSED(event) )
 {
@@ -146,7 +149,6 @@ void ColorSelector::OnRadio( wxCommandEvent &WXUNUSED(event) )
   namedColorClick_ = true;
 }
 
-       
 void ColorSelector::OnOK( wxCommandEvent &WXUNUSED(event) )
 {
   Apply();
@@ -212,5 +214,5 @@ void ColorSelector::Set( wxString const &filename, wxString const &parameters, w
   if( action == wxT("CLOSE") )Close();
   else if( action == wxT("APPLY") )Apply();
 }
-  
+
 // end of file
