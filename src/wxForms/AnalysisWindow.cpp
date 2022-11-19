@@ -196,7 +196,7 @@ void AnalysisWindow::OnAbout( wxCommandEvent &WXUNUSED(event) )
   textCtrl->AppendText( wxT(" \n") );
   wxTextAttr ta2( *wxBLACK, wxNullColour, wxNullFont, wxTEXT_ALIGNMENT_CENTRE );
   textCtrl->SetDefaultStyle( ta2 );
-  textCtrl->AppendText( wxString()<<wxT("version ")<<wxT(VERSION)<<wxT("\n") );
+  textCtrl->AppendText( wxString()<<wxT("version ")<<wxT("4.7.1")<<wxT("\n") );
   textCtrl->AppendText( wxT(" \n") );
   textCtrl->AppendText( wxT("Copyright 2005-10 by Joseph L. Chuma\n") );
   textCtrl->AppendText( wxT("Copyright 2012-21 by Edward Sternin\n") );
